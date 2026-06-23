@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand backgrounds / large accents — as specified in the brief */
+  --ci-orange: #ff8200;
+  --ci-orange-dark: #e06e00;
+  --ci-green: #009e49;
+  --ci-green-dark: #00753a;
+  --ci-white: #ffffff;
+  --ci-ivory: #faf7f2;
+  --ci-charcoal: #1f2421;
+  --ci-gray: #6b7280;
+  --ci-border: #e8e3da;
+
+  /* AA-safe text variants — same hue family, darkened so normal text on
+     white clears the 4.5:1 WCAG AA contrast ratio (raw --ci-orange and
+     --ci-green fail at ~2.5:1 and ~3.5:1 respectively). Use these for any
+     text smaller than ~24px/bold; the raw brand hexes stay reserved for
+     backgrounds, large headings, icons, and borders. */
+  --ci-orange-text: #b34a00;
+  --ci-green-text: #00753a;
+
+  --font-display: "Work Sans", system-ui, -apple-system, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--ci-white);
+  color: var(--ci-charcoal);
+}
+
+/* Visible keyboard focus everywhere — accessibility floor */
+:focus-visible {
+  outline: 2px solid var(--ci-orange);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print stylesheet for the annual / monthly calendar views */
+@media print {
+  nav,
+  footer,
+  .no-print,
+  .ad-slot {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  .print-calendar {
+    box-shadow: none !important;
+    border: none !important;
+  }
+}

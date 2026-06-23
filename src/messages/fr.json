@@ -1,0 +1,64 @@
+{
+  "site": {
+    "name": "Ivoire365",
+    "tagline": "Le calendrier ivoirien, simple et à jour"
+  },
+  "nav": {
+    "home": "Accueil",
+    "calendar": "Calendrier",
+    "holidays": "Jours fériés",
+    "schoolHolidays": "Vacances scolaires",
+    "ramadanTabaski": "Ramadan & Tabaski",
+    "weekNumber": "N° de semaine",
+    "dateCalculator": "Calculateur de dates",
+    "exams": "Examens",
+    "about": "À propos",
+    "contact": "Contact"
+  },
+  "home": {
+    "todayIs": "Aujourd'hui, nous sommes le",
+    "weekNumber": "Semaine n°",
+    "upcomingHolidays": "Prochains jours fériés",
+    "viewFullCalendar": "Voir le calendrier complet",
+    "quickTools": "Outils rapides"
+  },
+  "calendar": {
+    "annualTitle": "Calendrier {year} de la Côte d'Ivoire",
+    "printPdf": "Imprimer / Télécharger en PDF",
+    "weekColumn": "Sem.",
+    "viewMonth": "Voir le mois",
+    "backToYear": "Retour à l'année {year}"
+  },
+  "holidays": {
+    "indexTitle": "Jours fériés en Côte d'Ivoire",
+    "yearTitle": "Jours fériés {year} en Côte d'Ivoire",
+    "countdown": "dans {days} jours",
+    "today": "aujourd'hui",
+    "past": "passé",
+    "type": {
+      "civil": "Civil",
+      "christian": "Chrétien",
+      "muslim": "Musulman"
+    },
+    "movableDisclaimer": "Cette date dépend de l'observation du croissant lunaire et peut varier de 1 à 2 jours.",
+    "thisYear": "Cette année",
+    "nextYear": "Année suivante",
+    "daysUntil": "Jours restants"
+  },
+  "schoolHolidays": {
+    "title": "Vacances scolaires {schoolYear}",
+    "provisional": "Provisoire — à confirmer",
+    "source": "Source"
+  },
+  "tools": {
+    "weekNumberTitle": "Trouver le numéro de semaine",
+    "weekNumberDescription": "Entrez une date pour connaître son numéro de semaine ISO 8601.",
+    "dateCalculatorTitle": "Calculateur de dates",
+    "ageCalculator": "Calculateur d'âge"
+  },
+  "footer": {
+    "legalNotice": "Mentions légales",
+    "privacyPolicy": "Politique de confidentialité",
+    "rightsReserved": "Tous droits réservés"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "site": {
+    "name": "Ivoire365",
+    "tagline": "The Ivorian calendar, simple and up to date"
+  },
+  "nav": {
+    "home": "Home",
+    "calendar": "Calendar",
+    "holidays": "Public holidays",
+    "schoolHolidays": "School holidays",
+    "ramadanTabaski": "Ramadan & Tabaski",
+    "weekNumber": "Week number",
+    "dateCalculator": "Date calculator",
+    "exams": "Exams",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "home": {
+    "todayIs": "Today is",
+    "weekNumber": "Week",
+    "upcomingHolidays": "Upcoming public holidays",
+    "viewFullCalendar": "View full calendar",
+    "quickTools": "Quick tools"
+  },
+  "calendar": {
+    "annualTitle": "{year} Calendar for Côte d'Ivoire",
+    "printPdf": "Print / Download as PDF",
+    "weekColumn": "Wk",
+    "viewMonth": "View month",
+    "backToYear": "Back to {year}"
+  },
+  "holidays": {
+    "indexTitle": "Public holidays in Côte d'Ivoire",
+    "yearTitle": "{year} public holidays in Côte d'Ivoire",
+    "countdown": "in {days} days",
+    "today": "today",
+    "past": "past",
+    "type": {
+      "civil": "Civil",
+      "christian": "Christian",
+      "muslim": "Muslim"
+    },
+    "movableDisclaimer": "This date depends on moon-sighting and may shift by 1-2 days.",
+    "thisYear": "This year",
+    "nextYear": "Next year",
+    "daysUntil": "Days remaining"
+  },
+  "schoolHolidays": {
+    "title": "{schoolYear} school holidays",
+    "provisional": "Provisional — to be confirmed",
+    "source": "Source"
+  },
+  "tools": {
+    "weekNumberTitle": "Find the week number",
+    "weekNumberDescription": "Enter a date to find its ISO 8601 week number.",
+    "dateCalculatorTitle": "Date calculator",
+    "ageCalculator": "Age calculator"
+  },
+  "footer": {
+    "legalNotice": "Legal notice",
+    "privacyPolicy": "Privacy policy",
+    "rightsReserved": "All rights reserved"
+  }
+}
