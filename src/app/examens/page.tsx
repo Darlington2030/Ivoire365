@@ -4,6 +4,7 @@ import AdSlot from "@/components/AdSlot";
 import { getAvailableExamYears, getExamYearData } from "@/lib/exams";
 import { jsonLdScriptProps, breadcrumbJsonLd } from "@/lib/seo";
 import { formatLongDateFR } from "@/lib/date-utils";
+import type { ExamEntry } from "@/types/calendar";
 
 export const metadata: Metadata = {
   title: "Examens et concours en Côte d'Ivoire 2026",
@@ -71,7 +72,7 @@ export default function ExamensPage() {
   );
 }
 
-function StatusBadge({ status }: { status: "confirmed" | "estimated" | "non-annonce" }) {
+function StatusBadge({ status }: { status: ExamEntry["status"] }) {
   if (status === "confirmed") {
     return (
       <span className="inline-flex items-center gap-1 text-xs rounded-full px-2 py-0.5 bg-secondary-50 text-secondary-text">
@@ -80,11 +81,11 @@ function StatusBadge({ status }: { status: "confirmed" | "estimated" | "non-anno
       </span>
     );
   }
-  if (status === "estimated") {
+  if (status === "estimated" || status === "provisional") {
     return (
       <span className="inline-flex items-center gap-1 text-xs rounded-full px-2 py-0.5 bg-primary-50 text-primary-text">
         <CircleDashed size={12} strokeWidth={1.5} aria-hidden="true" />
-        Estimé
+        {status === "provisional" ? "Provisoire" : "Estimé"}
       </span>
     );
   }
