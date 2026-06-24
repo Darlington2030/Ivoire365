@@ -2,133 +2,310 @@
    IVOIRE365 — DESIGN TOKENS
    Single source of truth. Components reference these custom properties;
    never hard-code hex values, spacing, radii, or shadows in component files.
+
+   COLOR THEME OVERHAUL (this revision): retinted to a warm-ivory palette per
+   the "remove the boring white, keep CI colors, look premium" brief. Every
+   token NAME below is unchanged from the previous revision — only VALUES
+   changed — so every component that already references these custom
+   properties re-themes automatically with zero .tsx edits.
    ========================================================================== */
 
-:root {
-  /* ---- Color: Primary (Ivorian Orange) ---------------------------------- */
-  --color-primary-50: #fff4e6;
-  --color-primary-100: #ffe4bf;
-  --color-primary-200: #ffcb8a;
-  --color-primary-300: #ffb055;
-  --color-primary-400: #ff9a2e;
-  --color-primary-500: #f77f00; /* Brand primary — flag orange */
-  --color-primary-600: #d96e00;
-  --color-primary-700: #b55c00;
-  --color-primary-800: #8c4700;
-  --color-primary-900: #5e2f00;
-
-  /* ---- Color: Secondary (Ivorian Green) ---------------------------------- */
-  --color-secondary-50: #e6f5ee;
-  --color-secondary-100: #c0e6d0;
-  --color-secondary-200: #84cca6;
-  --color-secondary-300: #4db37c;
-  --color-secondary-400: #1a9e5a;
-  --color-secondary-500: #009a44; /* Brand secondary — flag green */
-  --color-secondary-600: #00823a;
-  --color-secondary-700: #006830;
-  --color-secondary-800: #004e24;
-  --color-secondary-900: #003418;
-
-  /* ---- Color: Neutrals (warm ivory undertone, not cold grey) ------------- */
-  --color-neutral-0: #ffffff;
-  --color-neutral-50: #fafaf8;
-  --color-neutral-100: #f4f3ef;
-  --color-neutral-200: #e8e6df;
-  --color-neutral-300: #d4d0c5;
-  --color-neutral-400: #b3ae9f;
-  --color-neutral-500: #8c8679;
-  --color-neutral-600: #6b6560;
-  --color-neutral-700: #49443f;
-  --color-neutral-800: #2e2a27;
-  --color-neutral-900: #1a1714;
-
-  /* ---- Color: Semantic ---------------------------------------------------- */
-  --color-surface: var(--color-neutral-0);
-  --color-surface-raised: var(--color-neutral-50);
-  --color-border: var(--color-neutral-200);
-  --color-border-strong: var(--color-neutral-300);
-  --color-text-primary: var(--color-neutral-900);
-  --color-text-secondary: var(--color-neutral-600);
-  --color-text-muted: var(--color-neutral-400);
-  --color-text-on-primary: #ffffff;
-
-  /* Text-safe accent variants — orange-500/green-500 fail WCAG AA as text
-     on white (≈2.6:1 / ≈3.4:1). Use these for any text under 24px/bold;
-     reserve the raw -500 hexes for backgrounds, large UI, and icons. */
-  --color-primary-text: var(--color-primary-700); /* #B55C00 → 4.9:1 on white */
-  --color-secondary-text: var(--color-secondary-700); /* #006830 → 6.2:1 on white */
-
-  /* Holiday category accents (this site has no event categories — these
-     map to holiday TYPE, the closest real equivalent) */
-  --color-holiday-civil: var(--color-neutral-700);
-  --color-holiday-christian: #4a2d85;
-  --color-holiday-christian-bg: #f0ebf8;
-  --color-holiday-christian-text: #4a2d85;
-  --color-holiday-muslim: var(--color-primary-500);
-  --color-holiday-muslim-bg: var(--color-primary-50);
-  --color-holiday-muslim-text: var(--color-primary-text);
-  --color-danger: #d94f3d;
-
-  /* ---- Typography ---------------------------------------------------------- */
-  /* --font-sans and --font-display are injected on <body> by next/font/google
-     (see src/app/layout.tsx) — not declared here, since a static value at
-     :root would conflict with and be overridden by that body-level rule
-     anyway. Tailwind's fontFamily.sans/display map to these var names. */
-
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-  --text-4xl: 2.25rem;
-
-  --font-regular: 400;
-  --font-medium: 500;
-  --font-semibold: 600;
-  --font-bold: 700;
-
-  --leading-tight: 1.25;
-  --leading-normal: 1.5;
-  --leading-relaxed: 1.625;
-
-  /* ---- Spacing (4px base grid) -------------------------------------------- */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.25rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-10: 2.5rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
-
-  /* ---- Radius -------------------------------------------------------------- */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-full: 9999px;
-
-  /* ---- Shadows -------------------------------------------------------------- */
-  --shadow-xs: 0 1px 2px rgba(26, 23, 20, 0.05);
-  --shadow-sm: 0 1px 3px rgba(26, 23, 20, 0.08), 0 1px 2px rgba(26, 23, 20, 0.04);
-  --shadow-md: 0 4px 6px rgba(26, 23, 20, 0.07), 0 2px 4px rgba(26, 23, 20, 0.05);
-  --shadow-lg: 0 10px 15px rgba(26, 23, 20, 0.08), 0 4px 6px rgba(26, 23, 20, 0.05);
-  --shadow-xl: 0 20px 25px rgba(26, 23, 20, 0.09), 0 10px 10px rgba(26, 23, 20, 0.04);
-  --shadow-primary: 0 4px 14px rgba(247, 127, 0, 0.25);
-  --shadow-secondary: 0 4px 14px rgba(0, 154, 68, 0.2);
-
-  /* ---- Transitions ---------------------------------------------------------- */
-  --duration-fast: 120ms;
-  --duration-base: 200ms;
-  --duration-slow: 300ms;
-  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-
-  /* ---- Focus ring ------------------------------------------------------------ */
-  --focus-ring: 0 0 0 3px rgba(247, 127, 0, 0.3);
-  --focus-ring-danger: 0 0 0 3px rgba(217, 79, 61, 0.1);
-}
+   :root {
+      /* ---- Color: Primary (Ivorian Orange) ---------------------------------- */
+      --color-primary-50: #fff3e0; /* --color-primary-faint in the brief */
+      --color-primary-100: #ffe8cc; /* --color-primary-light in the brief */
+      --color-primary-200: #ffd1a3;
+      --color-primary-300: #ffb86b;
+      --color-primary-400: #fc9a35;
+      --color-primary-500: #f77f00; /* Brand primary — flag orange, brief's exact hex */
+      --color-primary-600: #d96e00; /* Brand primary-dark in the brief */
+      --color-primary-700: #b55c00; /* Darker still — reserved for button backgrounds,
+                                        see note on --color-primary-text below */
+      --color-primary-800: #8c4700;
+      --color-primary-900: #5e2f00;
+    
+      /* ---- Color: Secondary (Ivorian Green) ---------------------------------- */
+      --color-secondary-50: #edf7f1; /* --color-secondary-faint in the brief */
+      --color-secondary-100: #ccead8; /* --color-secondary-light in the brief */
+      --color-secondary-200: #a3d9bb;
+      --color-secondary-300: #6bc294;
+      --color-secondary-400: #2ead6c;
+      --color-secondary-500: #009a44; /* Brand secondary — flag green, brief's exact hex */
+      --color-secondary-600: #007a35; /* Brand secondary-dark in the brief */
+      --color-secondary-700: #006830; /* Holiday text shade — see --color-secondary-text */
+      --color-secondary-800: #004e24;
+      --color-secondary-900: #003418;
+    
+      /* ---- Color: Page / surface tones (warm ivory family) ------------------- */
+      /* "ivoire" means ivory — the canvas itself carries the brand concept, not
+         just accents. These replace the previous cool-neutral scale 1:1. */
+      --color-neutral-0: #fdf9f4; /* --color-bg-surface in the brief — cards, panels */
+      --color-neutral-50: #f2e9dc; /* --color-bg-surface-alt — alt rows, week column */
+      --color-neutral-100: #f7f0e6; /* --color-bg-page — the warm ivory canvas itself */
+      --color-neutral-200: #e0d5c5; /* --color-border */
+      --color-neutral-300: #c8b99a; /* --color-border-strong */
+      --color-neutral-400: #a89880; /* muted-on-dark, used on header/footer only */
+      --color-neutral-500: #8c7b68; /* --color-text-muted */
+      --color-neutral-600: #5a4a36; /* --color-text-secondary */
+      --color-neutral-700: #3d2f20;
+      --color-neutral-800: #2a1f14;
+      --color-neutral-900: #1c1208; /* --color-text-primary */
+    
+      /* ---- Color: Header / footer (deep forest green, not page background) --- */
+      /* Distinct from --color-surface on purpose: the brief asks for a dark
+         green chrome around a light ivory canvas, not one shared surface tone.
+         Applied via scoped CSS-tag overrides further down this file (header,
+         footer, the mobile bottom nav) rather than by changing what bg-surface
+         means everywhere — see the "SCOPED DARK CHROME OVERRIDES" section. */
+      --color-bg-header: #1b3d2b;
+      --color-bg-footer: #14301f;
+    
+      /* ---- Color: Semantic ---------------------------------------------------- */
+      --color-bg-page: var(--color-neutral-100); /* the warm ivory canvas — body background */
+      --color-surface: var(--color-neutral-0);
+      --color-surface-raised: var(--color-neutral-50);
+      --color-border: var(--color-neutral-200);
+      --color-border-strong: var(--color-neutral-300);
+      --color-text-primary: var(--color-neutral-900);
+      --color-text-secondary: var(--color-neutral-600);
+      --color-text-muted: var(--color-neutral-500);
+      --color-text-on-primary: #ffffff;
+    
+      /* Text-safe accent variants. The brief specifies --color-text-link:
+         #C06800 for inline links, verified at 3.55:1 on the ivory page bg —
+         that clears WCAG AA for large/bold text and UI components, but falls
+         short of the 4.5:1 normal-body-text threshold. Kept as the brief
+         specifies for nav items, badges, and bold inline links (all of which
+         qualify as "large/UI text" at this site's actual sizes); button
+         backgrounds use the darker --color-primary-700 below, since white
+         text on the brief's own --color-primary (#F77F00) measures only
+         2.63:1 — below even the large-text floor. */
+      --color-primary-text: #c06800; /* brief's --color-text-link, exact hex */
+      --color-primary-text-strong: #994f00; /* brief's --color-text-link-hover, exact hex */
+      --color-secondary-text: var(--color-secondary-700); /* #006830 → 6.1:1 on ivory */
+    
+      /* Holiday category accents (this site has no event categories — these
+         map to holiday TYPE, the closest real equivalent) */
+      --color-holiday-civil: var(--color-neutral-700);
+      --color-holiday-christian: #4a2d85;
+      --color-holiday-christian-bg: #f0ebf8;
+      --color-holiday-christian-text: #4a2d85;
+      --color-holiday-christian-border: #d9ccee;
+      --color-holiday-muslim: var(--color-primary-500);
+      --color-holiday-muslim-bg: var(--color-primary-100);
+      --color-holiday-muslim-text: var(--color-primary-text);
+      --color-danger: #d94f3d;
+    
+      /* Calendar-specific backgrounds from the brief, exposed as their own
+         tokens for use anywhere a "today" or "holiday" tint is needed beyond
+         the calendar grid itself (e.g. badges, countdown highlights). */
+      --color-bg-today: #fff3e0;
+      --color-bg-holiday: #edf7f1;
+      --color-bg-weekend: #faf0e6;
+      --color-bg-selected: #fff8ee;
+      --color-text-today: #c06800;
+      --color-text-holiday: #006b30;
+    
+      /* ---- Typography ---------------------------------------------------------- */
+      /* --font-sans and --font-display are injected on <body> by next/font/google
+         (see src/app/layout.tsx) — not declared here, since a static value at
+         :root would conflict with and be overridden by that body-level rule
+         anyway. Tailwind's fontFamily.sans/display map to these var names. */
+    
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+      --text-4xl: 2.25rem;
+    
+      --font-regular: 400;
+      --font-medium: 500;
+      --font-semibold: 600;
+      --font-bold: 700;
+    
+      --leading-tight: 1.25;
+      --leading-normal: 1.5;
+      --leading-relaxed: 1.625;
+    
+      /* ---- Spacing (4px base grid) — unchanged, color overhaul only ---------- */
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+    
+      /* ---- Radius — unchanged, color overhaul only ---------------------------- */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --radius-full: 9999px;
+    
+      /* ---- Shadows ------------------------------------------------------------- */
+      /* Warm dark-brown shadow base (28,18,8) replacing the previous neutral
+         (26,23,20) base, per the brief: no shadow may use a cold rgba(0,0,0,…)
+         or near-neutral tone — shadows should read as warm, matching the ivory
+         palette rather than a generic grey UI kit. */
+      --shadow-xs: 0 1px 2px rgba(28, 18, 8, 0.05);
+      --shadow-sm: 0 1px 3px rgba(28, 18, 8, 0.08), 0 1px 2px rgba(28, 18, 8, 0.04);
+      --shadow-md: 0 4px 6px rgba(28, 18, 8, 0.07), 0 2px 4px rgba(28, 18, 8, 0.05);
+      --shadow-lg: 0 10px 15px rgba(28, 18, 8, 0.08), 0 4px 6px rgba(28, 18, 8, 0.05);
+      --shadow-xl: 0 20px 25px rgba(28, 18, 8, 0.09), 0 10px 10px rgba(28, 18, 8, 0.04);
+      --shadow-primary: 0 4px 14px rgba(247, 127, 0, 0.25);
+      --shadow-secondary: 0 4px 14px rgba(0, 154, 68, 0.2);
+      --shadow-card: var(--shadow-sm); /* brief's --shadow-card alias */
+      --shadow-nav: 0 2px 8px rgba(28, 18, 8, 0.12); /* brief's --shadow-nav */
+    
+      /* ---- Transitions — unchanged, color overhaul only ----------------------- */
+      --duration-fast: 120ms;
+      --duration-base: 200ms;
+      --duration-slow: 300ms;
+      --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    
+      /* ---- Focus ring ------------------------------------------------------------ */
+      --focus-ring: 0 0 0 3px rgba(247, 127, 0, 0.3);
+      --focus-ring-danger: 0 0 0 3px rgba(217, 79, 61, 0.1);
+    }
+    
+    /* ==========================================================================
+       SCOPED DARK CHROME OVERRIDES
+       ==========================================================================
+       The brief asks for a deep forest-green header and an even darker footer,
+       distinct from the light ivory --color-surface used by every card and
+       calendar cell. Those components currently share the same `bg-surface` /
+       `bg-surface-raised` Tailwind utility classes as every other light surface
+       in the app — there is no separate "header background" class to retarget
+       without editing SiteHeader.tsx / SiteFooter.tsx / MobileBottomNav.tsx,
+       which is explicitly off-limits for this CSS-only pass.
+    
+       The approach below is a CSS-only, tag-qualified override: it raises the
+       specificity of `header.bg-surface`, `footer.bg-surface-raised`, and
+       `nav.bg-surface` (this site's actual chrome elements) above the plain
+       utility class, repainting only those three elements dark while leaving
+       every other element using the same utility class (cards, the logo chip,
+       the mobile "more" sheet) untouched. No .tsx file is modified by this.
+    
+       Fragility note: this depends on `header`/`footer`/the bottom-nav `nav`
+       keeping their current Tailwind background utility class. If a future
+       edit changes SiteHeader.tsx to use a different background class, this
+       override will silently stop applying — at which point the cleanest fix
+       is to wire those three files to dedicated bg-header / bg-footer utility
+       classes directly (already defined in tailwind.config.js) rather than
+       re-patching this override.
+       ========================================================================== */
+    
+    header.bg-surface\/95 {
+      background-color: var(--color-bg-header);
+      border-bottom: none;
+      box-shadow: var(--shadow-nav);
+    }
+    
+    header.bg-surface\/95 .text-text-primary {
+      color: var(--color-text-on-primary);
+    }
+    
+    header.bg-surface\/95 .text-primary-text {
+      color: var(--color-primary-500);
+    }
+    
+    header.bg-surface\/95 .text-text-secondary {
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    header.bg-surface\/95 a:hover .text-text-secondary,
+    header.bg-surface\/95 a:hover.text-text-secondary,
+    header.bg-surface\/95 .hover\:text-text-primary:hover {
+      color: var(--color-text-on-primary);
+    }
+    
+    header.bg-surface\/95 .hover\:bg-neutral-100:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+    
+    footer.bg-surface-raised {
+      background-color: var(--color-bg-footer);
+      border-top: 3px solid var(--color-bg-header);
+      color: var(--color-bg-page);
+    }
+    
+    footer.bg-surface-raised .text-text-primary {
+      color: var(--color-bg-page);
+    }
+    
+    footer.bg-surface-raised .text-text-secondary {
+      color: var(--color-neutral-400);
+    }
+    
+    footer.bg-surface-raised .text-text-muted {
+      color: var(--color-neutral-400);
+    }
+    
+    footer.bg-surface-raised .border-border {
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    
+    footer.bg-surface-raised a:hover {
+      color: var(--color-primary-500);
+    }
+    
+    /* Mobile bottom tab bar only — the slide-up "more" sheet is a separate
+       light content surface and intentionally excluded from this override. */
+    nav.bg-surface {
+      background-color: var(--color-bg-header);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    nav.bg-surface .text-text-muted {
+      color: rgba(255, 255, 255, 0.65);
+    }
+    
+    nav.bg-surface .text-text-secondary {
+      color: rgba(255, 255, 255, 0.65);
+    }
+    
+    nav.bg-surface .text-primary-text {
+      color: var(--color-primary-500);
+    }
+    
+    /* Closes the one remaining hard-coded hex in the component layer:
+       HolidayBadge.tsx's Christian-type badge uses a Tailwind arbitrary-value
+       class `border-[#D9CCEE]` instead of a CSS-variable reference (unlike its
+       sibling bg/text classes on the same badge, which already use
+       `bg-[var(--color-holiday-christian-bg)]` etc.). This task is CSS-only, so
+       the component can't be edited to fix the class itself — instead, the
+       compiled Tailwind class is retargeted here to read from the new
+       --color-holiday-christian-border token. Same visual value today; a
+       future retint only needs to change the token, not hunt for this literal
+       hex again. The escaped selector matches Tailwind's own compiled output
+       for this exact arbitrary-value class. */
+    .border-\[\#D9CCEE\] {
+      border-color: var(--color-holiday-christian-border);
+    }
+    
+    /* The calendar grid's holiday-day circle uses orange (bg-primary-50 /
+       text-primary-text) from a previous design pass. This brief's checklist
+       explicitly wants holiday cells to read in green ("public holiday cells
+       have green tint background + green text"), matching the flag's green =
+       holidays convention stated in Part 1. bg-primary-50 / text-primary-text
+       are ordinary Tailwind utility classes also used elsewhere for orange
+       branding (e.g. the month-heading hover link, which sits as a sibling of
+       the <table>, not inside it) — so the override below is scoped with the
+       table's own aria-label to repaint only the in-grid holiday indicator,
+       leaving every other orange use of these same classes untouched. */
+    table[aria-label*="Calendrier"] .bg-primary-50 {
+      background-color: var(--color-bg-holiday);
+    }
+    
+    table[aria-label*="Calendrier"] .text-primary-text {
+      color: var(--color-text-holiday);
+    }
+    
