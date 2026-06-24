@@ -11,8 +11,8 @@ export default function WeekNumberTool() {
   const weekYear = isoWeekYear(date);
 
   return (
-    <div className="rounded-xl border border-ci-border bg-white p-5 sm:p-6 shadow-card">
-      <label htmlFor="week-date-input" className="block text-sm font-medium text-ci-charcoal mb-2">
+    <div className="rounded-xl border border-border bg-surface p-5 sm:p-6 shadow-sm">
+      <label htmlFor="week-date-input" className="block text-sm font-medium text-text-primary mb-1.5">
         Choisissez une date
       </label>
       <input
@@ -20,14 +20,14 @@ export default function WeekNumberTool() {
         type="date"
         value={dateInput}
         onChange={(e) => setDateInput(e.target.value)}
-        className="w-full sm:w-auto rounded-lg border border-ci-border px-4 py-3 text-base min-h-[44px] focus:border-ci-orange outline-none"
+        className="w-full sm:w-auto rounded-md border border-border-strong bg-surface px-3.5 py-2.5 text-sm text-text-primary min-h-[44px] outline-none transition-colors duration-fast ease-default focus:border-primary-500 focus:shadow-[0_0_0_3px_rgba(247,127,0,0.12)]"
       />
 
-      <div className="mt-5 rounded-lg bg-ci-ivory p-4 sm:p-5">
-        <p className="text-sm text-ci-gray mb-1">Numéro de semaine ISO 8601</p>
-        <p className="font-display text-3xl font-semibold text-ci-charcoal">
+      <div className="mt-5 rounded-lg bg-surface-raised p-4 sm:p-5">
+        <p className="text-sm text-text-secondary mb-1">Numéro de semaine ISO 8601</p>
+        <p className="font-display text-3xl font-semibold text-text-primary">
           Semaine {weekNum}
-          <span className="text-base font-normal text-ci-gray ml-2">({weekYear})</span>
+          <span className="text-base font-normal text-text-secondary ml-2">({weekYear})</span>
         </p>
       </div>
     </div>

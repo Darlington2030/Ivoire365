@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Skeleton from "@/components/Skeleton";
 
 interface CountdownTimerProps {
   /** ISO date string YYYY-MM-DD, or full ISO datetime */
@@ -55,17 +56,24 @@ export default function CountdownTimer({
   }, [targetDate]);
 
   if (!remaining) {
+    if (variant === "compact") {
+      return <Skeleton className="h-5 w-40" label="Chargement du compte à rebours" />;
+    }
     return (
-      <div
-        aria-hidden="true"
-        className={variant === "full" ? "h-[88px]" : "h-[24px]"}
-      />
+      <div role="status" aria-label="Chargement du compte à rebours">
+        {label && <Skeleton className="h-4 w-24 mb-2" />}
+        <div className="grid grid-cols-4 gap-2 max-w-sm">
+          {[0, 1, 2, 3].map((i) => (
+            <Skeleton key={i} className="h-[64px] rounded-lg" />
+          ))}
+        </div>
+      </div>
     );
   }
 
   if (remaining.isPast) {
     return (
-      <p className="text-ci-gray text-sm" role="status">
+      <p className="text-text-secondary text-sm" role="status">
         {label ? `${label} : ` : ""}cette date est passée.
       </p>
     );
@@ -73,11 +81,7 @@ export default function CountdownTimer({
 
   if (variant === "compact") {
     return (
-      <p
-        className="text-sm font-medium"
-        style={{ color: "var(--ci-orange-text)" }}
-        role="timer"
-      >
+      <p className="text-sm font-medium text-primary-text" role="timer">
         {label ? `${label} : ` : ""}
         {remaining.days} j {remaining.hours} h {remaining.minutes} min
       </p>
@@ -93,17 +97,17 @@ export default function CountdownTimer({
 
   return (
     <div role="timer" aria-live="off">
-      {label && <p className="text-sm text-ci-gray mb-2">{label}</p>}
+      {label && <p className="text-sm text-text-secondary mb-2">{label}</p>}
       <div className="grid grid-cols-4 gap-2 max-w-sm">
         {units.map((u) => (
           <div
             key={u.unitLabel}
-            className="flex flex-col items-center justify-center rounded-lg border border-ci-border bg-white py-3 shadow-card"
+            className="flex flex-col items-center justify-center rounded-lg border border-border bg-surface py-3 shadow-sm"
           >
-            <span className="font-display text-2xl font-semibold tabular-nums text-ci-charcoal">
+            <span className="font-display text-2xl font-semibold tabular-nums text-text-primary">
               {String(u.value).padStart(2, "0")}
             </span>
-            <span className="text-[11px] uppercase tracking-wide text-ci-gray mt-0.5">
+            <span className="text-[11px] uppercase tracking-wide text-text-secondary mt-0.5">
               {u.unitLabel}
             </span>
           </div>

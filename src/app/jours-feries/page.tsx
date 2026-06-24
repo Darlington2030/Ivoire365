@@ -29,10 +29,10 @@ export default function JoursFeriesIndexPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-12">
       <script {...jsonLdScriptProps(breadcrumb)} />
-      <h1 className="font-display text-3xl font-bold text-ci-charcoal">
+      <h1 className="font-display text-3xl font-bold text-text-primary">
         Jours fériés en Côte d'Ivoire
       </h1>
-      <p className="text-ci-gray mt-2 max-w-2xl">
+      <p className="text-text-secondary mt-2 max-w-2xl">
         La Côte d'Ivoire observe 14 jours fériés par an, mêlant fêtes civiles,
         chrétiennes et musulmanes. Choisissez une année ci-dessous pour voir le détail.
       </p>
@@ -41,7 +41,7 @@ export default function JoursFeriesIndexPage() {
           <li key={y}>
             <Link
               href={`/jours-feries/${y}`}
-              className="inline-flex items-center justify-center min-h-[44px] rounded-lg border border-ci-border bg-white px-5 font-medium text-ci-charcoal hover:border-ci-orange hover:text-ci-orange transition-colors"
+              className="inline-flex items-center justify-center min-h-[44px] rounded-md border border-border-strong bg-surface px-5 font-medium text-text-primary transition-colors duration-base ease-default hover:border-primary-500 hover:text-primary-text"
             >
               {y}
             </Link>

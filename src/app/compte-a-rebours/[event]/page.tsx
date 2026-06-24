@@ -30,7 +30,7 @@ export function generateMetadata({
   const holiday = getHolidayBySlug(params.event);
   if (!holiday) return {};
   return {
-    title: `Compte à rebours — ${holiday.name}`,
+    title: `Compte à rebours · ${holiday.name}`,
     description: `Combien de jours avant ${holiday.name} en Côte d'Ivoire ? Compte à rebours en direct.`,
     alternates: { canonical: `/compte-a-rebours/${params.event}` },
   };
@@ -54,13 +54,11 @@ export default function CountdownEventPage({
     <div className="mx-auto max-w-2xl px-4 sm:px-6 py-12 sm:py-16 text-center">
       <script {...jsonLdScriptProps(breadcrumb)} />
 
-      <p className="text-sm font-medium" style={{ color: "var(--ci-orange-text)" }}>
-        Compte à rebours
-      </p>
-      <h1 className="font-display text-3xl sm:text-4xl font-bold text-ci-charcoal mt-1">
+      <p className="text-sm font-medium text-primary-text">Compte à rebours</p>
+      <h1 className="font-display text-3xl sm:text-4xl font-bold text-text-primary mt-1">
         {holiday.name}
       </h1>
-      <p className="text-ci-gray mt-2 capitalize">{formatLongDateFR(holiday.date)}</p>
+      <p className="text-text-secondary mt-2 capitalize">{formatLongDateFR(holiday.date)}</p>
 
       <div className="mt-8 flex justify-center">
         <CountdownTimer targetDate={holiday.date} />

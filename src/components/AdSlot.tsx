@@ -14,7 +14,7 @@ const DIMENSIONS: Record<AdSlotProps["variant"], string> = {
 export default function AdSlot({ variant }: AdSlotProps) {
   return (
     <div
-      className={`ad-slot mx-auto flex items-center justify-center rounded-lg border border-dashed border-ci-border bg-ci-ivory/60 text-xs text-ci-gray ${DIMENSIONS[variant]}`}
+      className={`ad-slot mx-auto flex items-center justify-center rounded-lg border border-dashed border-border bg-surface-raised/60 text-xs text-text-secondary ${DIMENSIONS[variant]}`}
       data-ad-slot={variant}
       aria-hidden="true"
     >

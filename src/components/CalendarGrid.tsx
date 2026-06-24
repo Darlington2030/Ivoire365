@@ -7,6 +7,7 @@ import {
   monthLabel,
   monthSlug,
   toISO,
+  formatLongDateFR,
 } from "@/lib/date-utils";
 
 interface CalendarGridProps {
@@ -21,6 +22,8 @@ interface CalendarGridProps {
 }
 
 const WEEKDAY_HEADERS = ["L", "M", "M", "J", "V", "S", "D"];
+// Sunday is index 6 in our Monday-first layout — used to mute weekend text
+const WEEKEND_INDICES = new Set([5, 6]);
 
 export default function CalendarGrid({
   year,
@@ -47,20 +50,23 @@ export default function CalendarGrid({
   const weeks: (typeof cells)[] = [];
   for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
 
-  const headingClasses = size === "compact" ? "text-sm font-semibold" : "text-xl font-display font-semibold";
+  const headingClasses =
+    size === "compact" ? "text-sm font-semibold" : "text-xl font-display font-semibold";
 
   const MonthHeading = (
-    <h3 className={`${headingClasses} text-ci-charcoal mb-2 capitalize`}>
+    <h3 className={`${headingClasses} text-text-primary mb-2 capitalize`}>
       {monthLabel(monthIndex)}
     </h3>
   );
+
+  const circleSize = size === "compact" ? "h-7 w-7 text-xs" : "h-10 w-10 text-sm";
 
   return (
     <div className="select-none">
       {linkToMonth ? (
         <Link
           href={`/calendrier-${year}/${monthSlug(monthIndex)}`}
-          className="inline-block hover:text-ci-orange transition-colors"
+          className="inline-block hover:text-primary-text transition-colors duration-base ease-default"
         >
           {MonthHeading}
         </Link>
@@ -68,17 +74,22 @@ export default function CalendarGrid({
         MonthHeading
       )}
 
-      <table className="w-full border-collapse" aria-label={`Calendrier ${monthLabel(monthIndex)} ${year}`}>
+      <table
+        className="w-full border-collapse"
+        aria-label={`Calendrier ${monthLabel(monthIndex)} ${year}`}
+      >
         <thead>
           <tr>
-            <th scope="col" className="w-6 text-[10px] text-ci-gray font-normal pb-1">
+            <th scope="col" className="w-6 text-[10px] text-text-muted font-normal pb-1">
               Sem.
             </th>
             {WEEKDAY_HEADERS.map((w, i) => (
               <th
                 key={i}
                 scope="col"
-                className="text-[10px] sm:text-xs text-ci-gray font-normal pb-1 text-center"
+                className={`text-[10px] sm:text-xs font-normal pb-1 text-center uppercase tracking-wide ${
+                  WEEKEND_INDICES.has(i) ? "text-text-muted" : "text-text-secondary"
+                }`}
               >
                 {w}
               </th>
@@ -90,7 +101,7 @@ export default function CalendarGrid({
             const firstRealCell = week.find((c) => c !== null);
             return (
               <tr key={wi}>
-                <td className="text-[10px] text-ci-gray text-center align-middle">
+                <td className="text-[10px] text-text-muted text-center align-middle">
                   {firstRealCell ? firstRealCell.weekNum : ""}
                 </td>
                 {week.map((cell, ci) => {
@@ -99,22 +110,28 @@ export default function CalendarGrid({
                   }
                   const holiday = holidayByDate.get(cell.date);
                   const isToday = today === cell.date;
+                  const cellLabel = `${formatLongDateFR(cell.date)}${
+                    holiday ? `, ${holiday.name}` : ", aucun jour férié"
+                  }${isToday ? ", aujourd'hui" : ""}`;
+
                   return (
-                    <td key={ci} className="p-0.5 sm:p-1 text-center">
+                    <td
+                      key={ci}
+                      className="p-0.5 sm:p-1 text-center"
+                      aria-label={cellLabel}
+                      title={holiday ? holiday.name : undefined}
+                    >
                       <span
+                        aria-hidden="true"
                         className={[
-                          "inline-flex items-center justify-center rounded-md",
-                          size === "compact" ? "h-7 w-7 text-xs" : "h-10 w-10 text-sm",
+                          "inline-flex items-center justify-center rounded-full transition-colors duration-base ease-default",
+                          circleSize,
                           isToday
-                            ? "bg-ci-orange text-white font-semibold"
+                            ? "bg-primary-500 text-white font-semibold"
                             : holiday
-                              ? "bg-ci-green/10 font-medium"
-                              : "text-ci-charcoal",
+                              ? "bg-primary-50 text-primary-text font-medium"
+                              : "text-text-secondary",
                         ].join(" ")}
-                        style={
-                          !isToday && holiday ? { color: "var(--ci-green-text)" } : undefined
-                        }
-                        title={holiday ? holiday.name : undefined}
                       >
                         {cell.day}
                       </span>

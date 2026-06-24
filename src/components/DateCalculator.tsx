@@ -11,12 +11,15 @@ const TABS: Array<{ id: Mode; label: string }> = [
   { id: "age", label: "Calculateur d'âge" },
 ];
 
+const inputClasses =
+  "w-full rounded-md border border-border-strong bg-surface px-3.5 py-2.5 text-sm text-text-primary min-h-[44px] outline-none transition-colors duration-fast ease-default focus:border-primary-500 focus:shadow-[0_0_0_3px_rgba(247,127,0,0.12)]";
+
 export default function DateCalculator() {
   const [mode, setMode] = useState<Mode>("difference");
 
   return (
-    <div className="rounded-xl border border-ci-border bg-white shadow-card overflow-hidden">
-      <div role="tablist" aria-label="Type de calcul" className="flex flex-wrap border-b border-ci-border">
+    <div className="rounded-xl border border-border bg-surface shadow-sm overflow-hidden">
+      <div role="tablist" aria-label="Type de calcul" className="flex flex-wrap border-b border-border">
         {TABS.map((tab) => (
           <button
             key={tab.id}
@@ -24,10 +27,10 @@ export default function DateCalculator() {
             aria-selected={mode === tab.id}
             onClick={() => setMode(tab.id)}
             className={[
-              "flex-1 min-w-[140px] min-h-[44px] px-3 py-3 text-sm font-medium transition-colors",
+              "flex-1 min-w-[140px] min-h-[44px] px-3 py-3 text-sm font-medium transition-colors duration-base ease-default",
               mode === tab.id
-                ? "bg-ci-ivory text-ci-charcoal border-b-2 border-ci-orange"
-                : "text-ci-gray hover:bg-ci-ivory/60",
+                ? "bg-surface-raised text-text-primary border-b-2 border-primary-500"
+                : "text-text-secondary hover:bg-surface-raised/60",
             ].join(" ")}
           >
             {tab.label}
@@ -79,26 +82,38 @@ function AddSubtractCalculator() {
     <div className="space-y-4">
       <Field label="Date de départ" value={base} onChange={setBase} />
       <div className="flex flex-wrap items-end gap-3">
-        <div className="flex rounded-lg border border-ci-border overflow-hidden">
+        <div
+          role="group"
+          aria-label="Opération"
+          className="flex rounded-md border border-border-strong overflow-hidden"
+        >
           <button
+            type="button"
+            aria-pressed={operation === "add"}
             onClick={() => setOperation("add")}
-            className={`min-h-[44px] px-4 text-sm font-medium ${
-              operation === "add" ? "bg-ci-orange text-white" : "bg-white text-ci-charcoal"
+            className={`min-h-[44px] px-4 text-sm font-medium transition-colors duration-base ease-default ${
+              operation === "add"
+                ? "bg-primary-600 text-white"
+                : "bg-surface text-text-primary hover:bg-surface-raised"
             }`}
           >
             Ajouter
           </button>
           <button
+            type="button"
+            aria-pressed={operation === "subtract"}
             onClick={() => setOperation("subtract")}
-            className={`min-h-[44px] px-4 text-sm font-medium ${
-              operation === "subtract" ? "bg-ci-orange text-white" : "bg-white text-ci-charcoal"
+            className={`min-h-[44px] px-4 text-sm font-medium transition-colors duration-base ease-default ${
+              operation === "subtract"
+                ? "bg-primary-600 text-white"
+                : "bg-surface text-text-primary hover:bg-surface-raised"
             }`}
           >
             Soustraire
           </button>
         </div>
         <div className="flex-1 min-w-[140px]">
-          <label htmlFor="days-amount" className="block text-sm font-medium text-ci-charcoal mb-1.5">
+          <label htmlFor="days-amount" className="block text-sm font-medium text-text-primary mb-1.5">
             Nombre de jours
           </label>
           <input
@@ -107,7 +122,7 @@ function AddSubtractCalculator() {
             min={0}
             value={amount}
             onChange={(e) => setAmount(Math.max(0, Number(e.target.value)))}
-            className="w-full rounded-lg border border-ci-border px-4 py-3 text-base min-h-[44px] focus:border-ci-orange outline-none"
+            className={inputClasses}
           />
         </div>
       </div>
@@ -149,12 +164,12 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-ci-charcoal mb-1.5">{label}</label>
+      <label className="block text-sm font-medium text-text-primary mb-1.5">{label}</label>
       <input
         type="date"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-lg border border-ci-border px-4 py-3 text-base min-h-[44px] focus:border-ci-orange outline-none"
+        className={inputClasses}
       />
     </div>
   );
@@ -162,9 +177,9 @@ function Field({
 
 function Result({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-lg bg-ci-ivory p-4 sm:p-5">
-      <p className="text-sm text-ci-gray mb-1">Résultat</p>
-      <p className="font-display text-xl sm:text-2xl font-semibold text-ci-charcoal">{children}</p>
+    <div className="rounded-lg bg-surface-raised p-4 sm:p-5">
+      <p className="text-sm text-text-secondary mb-1">Résultat</p>
+      <p className="font-display text-xl sm:text-2xl font-semibold text-text-primary">{children}</p>
     </div>
   );
 }

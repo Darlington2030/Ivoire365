@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import HolidayBadge from "@/components/HolidayBadge";
+import { ArrowLeft, AlertTriangle } from "lucide-react";
+import HolidayBadge, { isNationalHoliday } from "@/components/HolidayBadge";
 import CountdownTimer from "@/components/CountdownTimer";
 import AdSlot from "@/components/AdSlot";
 import {
@@ -37,12 +38,10 @@ function isYearParam(param: string): boolean {
 export function generateStaticParams() {
   const params: Array<{ param: string }> = [];
 
-  // Year-table params
   for (const year of getAvailableYears()) {
     params.push({ param: String(year) });
   }
 
-  // Holiday-slug params
   const seenSlugs = new Set<string>();
   for (const year of getAvailableYears()) {
     const yearData = getYearData(year);
@@ -93,7 +92,7 @@ export default function JoursFeriesDynamicPage({
 }
 
 // ---------------------------------------------------------------------------
-// Year table view — formerly /jours-feries/[year]/page.tsx
+// Year table view
 // ---------------------------------------------------------------------------
 function YearTableView({ year }: { year: number }) {
   const yearData = getYearData(year);
@@ -112,7 +111,7 @@ function YearTableView({ year }: { year: number }) {
       <script {...jsonLdScriptProps(breadcrumb)} />
 
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <h1 className="font-display text-3xl font-bold text-ci-charcoal">
+        <h1 className="font-display text-3xl font-bold text-text-primary">
           Jours fériés {year} en Côte d'Ivoire
         </h1>
         <div className="flex gap-2">
@@ -122,7 +121,7 @@ function YearTableView({ year }: { year: number }) {
               <Link
                 key={y}
                 href={`/jours-feries/${y}`}
-                className="text-sm rounded-full border border-ci-border px-3 py-2 text-ci-charcoal hover:border-ci-orange hover:text-ci-orange min-h-[44px] flex items-center"
+                className="text-sm rounded-full border border-border-strong px-3 py-2 text-text-primary transition-colors duration-base ease-default hover:border-primary-500 hover:text-primary-text min-h-[44px] flex items-center"
               >
                 {y}
               </Link>
@@ -130,20 +129,20 @@ function YearTableView({ year }: { year: number }) {
         </div>
       </div>
 
-      <p className="text-ci-gray mt-2 max-w-2xl">
+      <p className="text-text-secondary mt-2 max-w-2xl">
         {yearData.holidays.length} jours fériés sont prévus en {year}. Les dates des fêtes
-        musulmanes (marquées 🌙) dépendent de l'observation du croissant lunaire et peuvent
-        varier de 1 à 2 jours.
+        musulmanes (signalées par l'icône lune) dépendent de l'observation du croissant
+        lunaire et peuvent varier de 1 à 2 jours.
       </p>
 
-      <div className="mt-6 overflow-x-auto rounded-xl border border-ci-border shadow-card">
+      <div className="mt-6 overflow-x-auto rounded-xl border border-border shadow-sm">
         <table className="w-full text-sm">
-          <thead className="bg-ci-ivory text-left">
+          <thead className="bg-surface-raised text-left">
             <tr>
-              <th className="px-4 py-3 font-semibold text-ci-charcoal">Date</th>
-              <th className="px-4 py-3 font-semibold text-ci-charcoal">Fête</th>
-              <th className="px-4 py-3 font-semibold text-ci-charcoal hidden sm:table-cell">Type</th>
-              <th className="px-4 py-3 font-semibold text-ci-charcoal text-right">Statut</th>
+              <th className="px-4 py-3 font-semibold text-text-primary">Date</th>
+              <th className="px-4 py-3 font-semibold text-text-primary">Fête</th>
+              <th className="px-4 py-3 font-semibold text-text-primary hidden sm:table-cell">Type</th>
+              <th className="px-4 py-3 font-semibold text-text-primary text-right">Statut</th>
             </tr>
           </thead>
           <tbody>
@@ -152,22 +151,25 @@ function YearTableView({ year }: { year: number }) {
               const statusLabel =
                 diff === 0 ? "Aujourd'hui" : diff > 0 ? `dans ${diff} j` : "Passé";
               return (
-                <tr key={h.slug} className="border-t border-ci-border bg-white hover:bg-ci-ivory/40">
-                  <td className="px-4 py-3 whitespace-nowrap text-ci-charcoal capitalize">
+                <tr
+                  key={h.slug}
+                  className="border-t border-border bg-surface transition-colors duration-base ease-default hover:bg-surface-raised"
+                >
+                  <td className="px-4 py-3 whitespace-nowrap text-text-primary capitalize">
                     {formatLongDateFR(h.date)}
                   </td>
                   <td className="px-4 py-3">
                     <Link
                       href={`/jours-feries/${h.slug}`}
-                      className="font-medium text-ci-charcoal hover:text-ci-orange"
+                      className="font-medium text-text-primary hover:text-primary-text"
                     >
                       {h.name}
                     </Link>
                   </td>
                   <td className="px-4 py-3 hidden sm:table-cell">
-                    <HolidayBadge type={h.type} movable={h.movable} />
+                    <HolidayBadge type={h.type} movable={h.movable} national={isNationalHoliday(h.slug)} />
                   </td>
-                  <td className="px-4 py-3 text-right text-ci-gray whitespace-nowrap">
+                  <td className="px-4 py-3 text-right text-text-secondary whitespace-nowrap">
                     {statusLabel}
                   </td>
                 </tr>
@@ -179,20 +181,20 @@ function YearTableView({ year }: { year: number }) {
 
       {yearData.continuousDays.length > 0 && (
         <section className="mt-8">
-          <h2 className="font-display text-lg font-semibold text-ci-charcoal mb-3">
+          <h2 className="font-display text-lg font-semibold text-text-primary mb-3">
             Journées continues {year}
           </h2>
-          <p className="text-sm text-ci-gray mb-3">
+          <p className="text-sm text-text-secondary mb-3">
             Ces journées ne sont pas des jours fériés, mais des journées à horaires aménagés.
           </p>
           <ul className="space-y-2">
             {yearData.continuousDays.map((cd) => (
               <li
                 key={cd.date}
-                className="flex justify-between rounded-lg border border-ci-border bg-white px-4 py-3 text-sm"
+                className="flex justify-between rounded-lg border border-border bg-surface px-4 py-3 text-sm"
               >
-                <span className="text-ci-charcoal">{cd.label}</span>
-                <span className="text-ci-gray">
+                <span className="text-text-primary">{cd.label}</span>
+                <span className="text-text-secondary">
                   {formatLongDateFR(cd.date)}
                   {cd.hours ? ` · ${cd.hours}` : ""}
                 </span>
@@ -206,7 +208,7 @@ function YearTableView({ year }: { year: number }) {
         <AdSlot variant="in-content" />
       </div>
 
-      <p className="mt-6 text-xs text-ci-gray">
+      <p className="mt-6 text-xs text-text-muted">
         Dernière vérification : {yearData.lastVerified}.
       </p>
     </div>
@@ -214,7 +216,7 @@ function YearTableView({ year }: { year: number }) {
 }
 
 // ---------------------------------------------------------------------------
-// Holiday detail view — formerly /jours-feries/[slug]/page.tsx
+// Holiday detail view
 // ---------------------------------------------------------------------------
 function HolidayDetailView({ slug }: { slug: string }) {
   const today = todayISO();
@@ -239,17 +241,26 @@ function HolidayDetailView({ slug }: { slug: string }) {
       <script {...jsonLdScriptProps(breadcrumb)} />
       <script {...jsonLdScriptProps(holidayEventJsonLd(holiday))} />
 
-      <nav className="text-sm text-ci-gray mb-4">
-        <Link href="/jours-feries" className="hover:text-ci-orange">
-          ← Tous les jours fériés
+      <nav className="text-sm text-text-secondary mb-4">
+        <Link
+          href="/jours-feries"
+          className="inline-flex items-center gap-1.5 hover:text-primary-text transition-colors duration-base ease-default"
+        >
+          <ArrowLeft size={16} strokeWidth={1.5} aria-hidden="true" />
+          Tous les jours fériés
         </Link>
       </nav>
 
-      <HolidayBadge type={holiday.type} movable={holiday.movable} size="md" />
-      <h1 className="font-display text-3xl sm:text-4xl font-bold text-ci-charcoal mt-3">
+      <HolidayBadge
+        type={holiday.type}
+        movable={holiday.movable}
+        national={isNationalHoliday(holiday.slug)}
+        size="md"
+      />
+      <h1 className="font-display text-3xl sm:text-4xl font-bold text-text-primary mt-3">
         {holiday.name}
       </h1>
-      <p className="text-lg text-ci-gray mt-2 capitalize">
+      <p className="text-lg text-text-secondary mt-2 capitalize">
         {formatLongDateFR(holiday.date)} ({current.year})
       </p>
 
@@ -261,37 +272,37 @@ function HolidayDetailView({ slug }: { slug: string }) {
       </div>
 
       {holiday.disclaimer && (
-        <div
-          className="mt-6 rounded-lg border border-[#FFD9AD] bg-[#FFF3E6] p-4 text-sm"
-          style={{ color: "var(--ci-orange-text)" }}
-        >
-          ⚠️ {holiday.disclaimer}
-          {holiday.source && <p className="mt-1 text-xs opacity-90">{holiday.source}</p>}
+        <div className="mt-6 flex gap-3 rounded-lg border border-primary-200 bg-primary-50 p-4 text-sm text-primary-text">
+          <AlertTriangle size={18} strokeWidth={1.5} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
+          <div>
+            {holiday.disclaimer}
+            {holiday.source && <p className="mt-1 text-xs opacity-90">{holiday.source}</p>}
+          </div>
         </div>
       )}
 
-      <section className="mt-8 prose-sm">
-        <h2 className="font-display text-xl font-semibold text-ci-charcoal mb-2">
+      <section className="mt-8">
+        <h2 className="font-display text-xl font-semibold text-text-primary mb-2">
           À propos de cette fête
         </h2>
-        <p className="text-ci-charcoal leading-relaxed">{holiday.description}</p>
+        <p className="text-text-primary leading-relaxed">{holiday.description}</p>
       </section>
 
       <section className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="rounded-lg border border-ci-border bg-white p-5">
-          <p className="text-sm text-ci-gray">Cette année ({current.year})</p>
-          <p className="font-display text-xl font-semibold text-ci-charcoal mt-1 capitalize">
+        <div className="rounded-lg border border-border bg-surface p-5">
+          <p className="text-sm text-text-secondary">Cette année ({current.year})</p>
+          <p className="font-display text-xl font-semibold text-text-primary mt-1 capitalize">
             {formatLongDateFR(holiday.date)}
           </p>
         </div>
-        <div className="rounded-lg border border-ci-border bg-white p-5">
-          <p className="text-sm text-ci-gray">Année suivante</p>
+        <div className="rounded-lg border border-border bg-surface p-5">
+          <p className="text-sm text-text-secondary">Année suivante</p>
           {next ? (
-            <p className="font-display text-xl font-semibold text-ci-charcoal mt-1 capitalize">
+            <p className="font-display text-xl font-semibold text-text-primary mt-1 capitalize">
               {formatLongDateFR(next.holiday.date)}
             </p>
           ) : (
-            <p className="text-ci-gray mt-1 text-sm">
+            <p className="text-text-secondary mt-1 text-sm">
               Donnée non encore disponible — revenez plus tard.
             </p>
           )}
@@ -299,8 +310,8 @@ function HolidayDetailView({ slug }: { slug: string }) {
       </section>
 
       {holiday.dayObserved && (
-        <p className="mt-6 text-sm text-ci-gray">
-          <strong className="text-ci-charcoal">Note sur l'observation : </strong>
+        <p className="mt-6 text-sm text-text-secondary">
+          <strong className="text-text-primary">Note sur l'observation : </strong>
           {holiday.dayObserved.note}
         </p>
       )}
